@@ -1,0 +1,9 @@
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Referencias\configuraciones.txt
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\rutas.txt
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\ProcesamientoXML.exe
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\ProcesamientoXML.pdb
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\ProcesamientoXML.Form1.resources
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\ProcesamientoXML.Properties.Resources.resources
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\Reportes.csproj.GenerateResource.Cache
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\ProcesamientoXML.exe
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\ProcesamientoXML.pdb

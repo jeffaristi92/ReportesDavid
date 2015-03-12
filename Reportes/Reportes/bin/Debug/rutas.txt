@@ -1,0 +1,4 @@
+﻿C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Entrada
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Salida
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Backup
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Referencias

@@ -1,0 +1,4 @@
+﻿Invoice01=PXP-F0060
+Invoice03=PXP-F060BO
+CreditNote=PXP-F060NC
+DebitNote=PXP-F060ND
