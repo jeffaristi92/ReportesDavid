@@ -13,6 +13,7 @@ namespace ProcesamientoXML
         public string Salida;
         public string Backup;
         public string Referencias;
+        public List<string> Adicionales;
 
         public Rutas()
         {
@@ -21,6 +22,7 @@ namespace ProcesamientoXML
             Salida = "";
             Backup = "";
             Referencias = "";
+            Adicionales = new List<string>();
         }
 
         public void cargarRutas()
@@ -33,6 +35,14 @@ namespace ProcesamientoXML
                 Salida = lineas[1].Replace('\r', ' ');
                 Backup = lineas[2].Replace('\r', ' ');
                 Referencias = lineas[3].Replace('\r', ' ');
+
+                if (lineas.Length > 4)
+                {
+                    for (int i = 4; i < lineas.Length; i++)
+                    {
+                        Adicionales.Add(lineas[i]);
+                    }
+                }
             }
 
             crearCarpetas();
