@@ -40,7 +40,7 @@ namespace ProcesamientoXML
                 {
                     for (int i = 4; i < lineas.Length; i++)
                     {
-                        Adicionales.Add(lineas[i]);
+                        Adicionales.Add(lineas[i].Replace('\r', ' '));
                     }
                 }
             }
@@ -90,6 +90,14 @@ namespace ProcesamientoXML
                 if (!Directory.Exists(Referencias))
                 {
                     Directory.CreateDirectory(Referencias);
+                }
+
+                foreach (string adicional in Adicionales)
+                {
+                    if (!Directory.Exists(adicional))
+                    {
+                        Directory.CreateDirectory(adicional);
+                    }
                 }
 
                 return true;

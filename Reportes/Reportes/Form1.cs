@@ -29,14 +29,27 @@ namespace ProcesamientoXML
             cargarRutas();
             string rutaReferencia = Path.Combine(RutasProcesamiento.Referencias, "Motivos.txt");
             dsReferencias.Tables.Add(cargarReferencia(rutaReferencia, "Motivos", "|", 2, new string[] { "LLAVE", "VALOR" }));
-            cargarDocumentos();
+            try
+            {
+                cargarDocumentos(RutasProcesamiento.Entrada, 1);
+                if (RutasProcesamiento.Adicionales.Count >= 2)
+                {
+                    cargarDocumentos(RutasProcesamiento.Adicionales[1], 2);
+                }
+                if (RutasProcesamiento.Adicionales.Count >= 3)
+                {
+                    cargarDocumentos(RutasProcesamiento.Adicionales[2], 2);
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(string.Format("[error] {0}", exc.Message));
+            }
         }
 
-        void cargarDocumentos()
+        void cargarDocumentos(string strRuta, int tipo)
         {
-            string[] strDocumentos = Directory.GetFiles(RutasProcesamiento.Entrada);
-            progressBar1.Maximum = strDocumentos.Length;
-            progressBar1.Minimum = 0;
+            string[] strDocumentos = Directory.GetFiles(strRuta);
 
             if (strDocumentos.Length > 0)
             {
@@ -46,24 +59,25 @@ namespace ProcesamientoXML
 
                 if (strArchivo1.Length > 0 && strArchivo2.Length > 0 && strArchivo3.Length > 0)
                 {
-                    string strReporte = procesarDocumento(strArchivo1[0], strArchivo2[0], strArchivo3[0]);
+                    string strReporte = procesarDocumento(strArchivo1[0], strArchivo2[0], strArchivo3[0], tipo);
 
-                    if (!strReporte.Equals(string.Empty)) {
-                        string strRutaSalida = Path.Combine(RutasProcesamiento.Salida,string.Format("ReporteRiplay_{0:yyyyMMddHHmmss}.txt",DateTime.Now));
-                        File.WriteAllText(strRutaSalida,strReporte);
+                    if (!strReporte.Equals(string.Empty))
+                    {
+                        string strRutaSalida = Path.Combine(RutasProcesamiento.Salida, string.Format("{0}_ReporteRiplay_{1:yyyyMMddHHmmss}.txt", tipo, DateTime.Now));
+                        File.WriteAllText(strRutaSalida, strReporte);
                     }
                 }
             }
         }
 
-        string procesarDocumento(string strArchivo1, string strArchivo2, string strArchivo3)
+        string procesarDocumento(string strArchivo1, string strArchivo2, string strArchivo3, int tipo)
         {
             DataTable dtPrimerArchivo = cargarPrimerArchivo(strArchivo1);
             DataTable dtSegundoArchivo = cargarSegundoArchivo(strArchivo2);
             DataTable dtTercerArchivo = cargarTercerArchivo(strArchivo3);
 
             List<string> lstArchivosNoProcesados = getArchivosNoProcesados(dtPrimerArchivo, dtSegundoArchivo);
-            List<string[]> lstArchivosNoCargados = getArchivosNoCargados(dtSegundoArchivo, dtTercerArchivo);
+            List<string[]> lstArchivosNoCargados = getArchivosNoCargados(dtSegundoArchivo, dtTercerArchivo, tipo);
 
             return generarReporte(lstArchivosNoProcesados, lstArchivosNoCargados).ToString();
         }
@@ -81,7 +95,7 @@ namespace ProcesamientoXML
                     sbReporte.AppendLine("-------------------------------");
                     foreach (string archivo in lstArchivosNoProcesados)
                     {
-                        sbReporte.Append(archivo);
+                        sbReporte.AppendLine(archivo);
                     }
                     sbReporte.AppendLine("-------------------------------");
                 }
@@ -104,7 +118,8 @@ namespace ProcesamientoXML
         string getMotivo(string archivo)
         {
             string strMotivo = string.Empty;
-            string strRutaArchivo = Path.Combine(RutasProcesamiento.Adicionales[0], archivo);
+            string strAux = RutasProcesamiento.Adicionales[0];
+            string strRutaArchivo = Path.Combine(strAux, archivo);
 
             if (File.Exists(strRutaArchivo))
             {
@@ -144,10 +159,10 @@ namespace ProcesamientoXML
             return lstArchivosNoProcesados;
         }
 
-        List<string[]> getArchivosNoCargados(DataTable dtSegundoArchivo, DataTable dtTercerArchivo)
+        List<string[]> getArchivosNoCargados(DataTable dtSegundoArchivo, DataTable dtTercerArchivo, int tipo)
         {
             List<string[]> lstArchivosNoCargados = new List<string[]>();
-            List<string> lstArchivosCargados = getArchivosCargados(dtTercerArchivo);
+            List<string> lstArchivosCargados = getArchivosCargados(dtTercerArchivo, tipo);
 
             foreach (DataRow fila in dtSegundoArchivo.Rows)
             {
@@ -163,15 +178,37 @@ namespace ProcesamientoXML
             return lstArchivosNoCargados;
         }
 
-        List<string> getArchivosCargados(DataTable dtTercerArchivo)
+        List<string> getArchivosCargados(DataTable dtTercerArchivo, int tipo)
         {
             List<string> lstArchivosCargados = new List<string>();
 
             foreach (DataRow fila in dtTercerArchivo.Rows)
             {
-                string doc = fila[8].ToString().Trim();
-                string nro = doc.Substring(doc.Length - 8, 7);
-                lstArchivosCargados.Add(nro);
+                string doc = string.Empty;
+                switch (tipo)
+                {
+                    case 1:
+                        doc = fila[8].ToString().Trim();
+                        if (doc.Length > 7)
+                        {
+                            doc = doc.Substring(doc.Length - 8, 7);
+                        }
+                        else
+                        {
+                            doc = string.Empty;
+                        }
+                        break;
+                    case 2:
+                        doc = fila[7].ToString().Trim();
+                        break;
+                    default:
+                        break;
+                }
+
+                if (!doc.Equals(string.Empty))
+                {
+                    lstArchivosCargados.Add(doc);
+                }
             }
 
             return lstArchivosCargados;

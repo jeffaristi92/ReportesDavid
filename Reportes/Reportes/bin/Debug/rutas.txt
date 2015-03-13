@@ -1,5 +1,7 @@
-﻿C:\Users\ARISTIZABAL\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Entrada
-C:\Users\ARISTIZABAL\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Salida
-C:\Users\ARISTIZABAL\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Backup
-C:\Users\ARISTIZABAL\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Referencias
-C:\Users\ARISTIZABAL\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Adicional
+﻿C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Entrada
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Salida
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Backup
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Referencias
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Adicional
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Entrada2
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\bin\Debug\Rutas\Entrada3
