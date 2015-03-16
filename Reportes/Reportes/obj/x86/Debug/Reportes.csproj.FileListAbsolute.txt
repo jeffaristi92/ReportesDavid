@@ -9,3 +9,4 @@ C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug
 C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\Reportes.csproj.GenerateResource.Cache
 C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\ProcesamientoXML.exe
 C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\ProcesamientoXML.pdb
+C:\Users\yefguaar\Documents\GitHub\ReportesDavid\Reportes\Reportes\obj\x86\Debug\Reportes.csprojResolveAssemblyReference.cache
