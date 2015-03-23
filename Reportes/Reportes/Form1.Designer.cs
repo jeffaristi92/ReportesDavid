@@ -1,4 +1,4 @@
-﻿namespace ProcesamientoXML
+﻿namespace Reportes
 {
     partial class Form1
     {

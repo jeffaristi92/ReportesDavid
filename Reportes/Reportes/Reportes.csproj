@@ -8,8 +8,8 @@
     <ProjectGuid>{A8CECA6D-A7A6-4B07-8A98-8280C124E0BA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProcesamientoXML</RootNamespace>
-    <AssemblyName>ProcesamientoXML</AssemblyName>
+    <RootNamespace>Reportes</RootNamespace>
+    <AssemblyName>Reportes</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

@@ -10,7 +10,7 @@ using System.Xml;
 using System.IO;
 using System.Data.OleDb;
 
-namespace ProcesamientoXML
+namespace Reportes
 {
     public partial class Form1 : Form
     {
@@ -21,6 +21,7 @@ namespace ProcesamientoXML
             InitializeComponent();
             Text = "Reportes";
             startProcess();
+            Close();
         }
 
         public void startProcess()
@@ -42,6 +43,14 @@ namespace ProcesamientoXML
                 {
                     lstReportes.Add(cargarDocumentos(RutasProcesamiento.Adicionales[2], 2, "SLSRPT"));
                 }
+                if (RutasProcesamiento.Adicionales.Count >= 4)
+                {
+                    lstReportes.Add(cargarDocumentos(RutasProcesamiento.Adicionales[3], 3, "DESADV"));
+                }
+                if (RutasProcesamiento.Adicionales.Count >= 5)
+                {
+                    lstReportes.Add(cargarDocumentos(RutasProcesamiento.Adicionales[4], 3, "RECADV"));
+                }
                 generarResumen(lstReportes);
 
             }
@@ -51,12 +60,14 @@ namespace ProcesamientoXML
             }
         }
 
-        void generarResumen(List<clsReporte> lstReportes) {
+        void generarResumen(List<clsReporte> lstReportes)
+        {
             StringBuilder sbResumen = new StringBuilder();
             sbResumen.AppendLine(DateTime.Now.ToString("dd/MM/yyyy"));
             sbResumen.AppendLine("DOCUMENTO,GENERADOS,BACKUP,NO PROCESADOS,CEN,ERROR");
-            foreach(clsReporte reporte in lstReportes){
-                sbResumen.AppendLine(reporte.ToString());   
+            foreach (clsReporte reporte in lstReportes)
+            {
+                sbResumen.AppendLine(reporte.ToString());
             }
             string strRutaSalida = Path.Combine(RutasProcesamiento.Salida, string.Format("Resumen_ReporteRiplay_{0:yyyyMMddHHmmss}.txt", DateTime.Now));
             File.WriteAllText(strRutaSalida, sbResumen.ToString());
@@ -75,11 +86,11 @@ namespace ProcesamientoXML
 
                 if (strArchivo1.Length > 0 && strArchivo2.Length > 0 && strArchivo3.Length > 0)
                 {
-                    objReporte = procesarDocumento(strArchivo1[0], strArchivo2[0], strArchivo3[0], tipo,doc);
+                    objReporte = procesarDocumento(strArchivo1[0], strArchivo2[0], strArchivo3[0], tipo, doc);
 
                     if (!objReporte.Reporte.Equals(string.Empty))
                     {
-                        string strRutaSalida = Path.Combine(RutasProcesamiento.Salida, string.Format("{0}_ReporteRiplay_{1:yyyyMMddHHmmss}.txt", doc, DateTime.Now));
+                        string strRutaSalida = Path.Combine(RutasProcesamiento.Salida, string.Format("{0}_ReporteRipley_{1:yyyyMMddHHmmss}.txt", doc, DateTime.Now));
                         File.WriteAllText(strRutaSalida, objReporte.Reporte);
                     }
                 }
@@ -87,7 +98,7 @@ namespace ProcesamientoXML
             return objReporte;
         }
 
-        clsReporte procesarDocumento(string strArchivo1, string strArchivo2, string strArchivo3, int tipo,string doc)
+        clsReporte procesarDocumento(string strArchivo1, string strArchivo2, string strArchivo3, int tipo, string doc)
         {
             clsReporte objReporte = new clsReporte();
 
@@ -95,17 +106,21 @@ namespace ProcesamientoXML
             DataTable dtSegundoArchivo = cargarSegundoArchivo(strArchivo2);
             DataTable dtTercerArchivo = cargarTercerArchivo(strArchivo3);
 
-            List<string> lstArchivosNoProcesados = getArchivosNoProcesados(dtPrimerArchivo, dtSegundoArchivo);
-            List<string[]> lstArchivosNoCargados = getArchivosNoCargados(dtSegundoArchivo, dtTercerArchivo, tipo);
-
             objReporte.Documento = doc;
             objReporte.Generados = dtPrimerArchivo.Rows.Count;
             objReporte.Backup = dtSegundoArchivo.Rows.Count;
-            objReporte.NoProcesados = lstArchivosNoProcesados.Count;
+            objReporte.NoProcesados = objReporte.Generados - objReporte.Backup;
             objReporte.CEN = dtTercerArchivo.Rows.Count;
-            objReporte.Error = lstArchivosNoCargados.Count;
-            objReporte.Reporte = generarReporte(lstArchivosNoProcesados, lstArchivosNoCargados).ToString();
+            objReporte.Error = objReporte.Backup - objReporte.CEN;
 
+            if (tipo != 3)
+            {
+                List<string> lstArchivosNoProcesados = getArchivosNoProcesados(dtPrimerArchivo, dtSegundoArchivo);
+                List<string[]> lstArchivosNoCargados = getArchivosNoCargados(dtSegundoArchivo, dtTercerArchivo, tipo);
+                
+                objReporte.Reporte = generarReporte(lstArchivosNoProcesados, lstArchivosNoCargados).ToString();
+            }
+            
             return objReporte;
         }
 
@@ -115,7 +130,7 @@ namespace ProcesamientoXML
 
             if (lstArchivosNoProcesados.Count > 0 || lstArchivosNoCargados.Count > 0)
             {
-                sbReporte.AppendLine(string.Format("REPORTE REPLAY {0}", DateTime.Now.ToString("dd/MM/yyyy")));
+                sbReporte.AppendLine(string.Format("REPORTE REPLEY {0}", DateTime.Now.ToString("dd/MM/yyyy")));
                 if (lstArchivosNoProcesados.Count > 0)
                 {
                     sbReporte.AppendLine("NO PROCESADOS");
@@ -194,9 +209,10 @@ namespace ProcesamientoXML
             foreach (DataRow fila in dtSegundoArchivo.Rows)
             {
                 string strValor = string.Empty;
-                switch(tipo){
+                switch (tipo)
+                {
                     case 1:
-                        strValor = getNroDocumento(fila[0].ToString()); 
+                        strValor = getNroDocumento(fila[0].ToString());
                         break;
                     case 2:
                         strValor = getSNRF(fila[0].ToString());
